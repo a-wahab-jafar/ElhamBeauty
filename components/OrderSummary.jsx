@@ -78,6 +78,10 @@ const OrderSummary = () => {
       if (data.success) {
         const orderId = data.orderId;
         const totalAmount = getCartAmount();
+
+        if (data.removedItems?.length > 0) {
+          toast.success(`Some items were removed from your cart before checkout.`);
+        }
         
         let message = `Hello! I would like to place an order.\n\n`;
         message += `*Order ID: ${orderId}*\n\n`;

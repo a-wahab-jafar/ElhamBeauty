@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { sanitizeCartItems } from "@/lib/cartUtils.mjs";
 
 export const AppContext = createContext();
 
@@ -56,7 +57,7 @@ export const AppContextProvider = (props) => {
 
         if (data.success) {
             setUserData(data.user)
-            setCartItems(data.user.cartItems)
+            setCartItems(sanitizeCartItems(data.user.cartItems))
         } else {
             toast.error(data.message)
         }
@@ -68,7 +69,7 @@ export const AppContextProvider = (props) => {
 
     const addToCart = async (itemId) => {
 
-        let cartData = structuredClone(cartItems);
+        let cartData = sanitizeCartItems(structuredClone(cartItems));
         if (cartData[itemId]) {
             cartData[itemId] += 1;
         }
@@ -96,13 +97,13 @@ export const AppContextProvider = (props) => {
 
     const updateCartQuantity = async (itemId, quantity) => {
 
-        let cartData = structuredClone(cartItems);
+        let cartData = sanitizeCartItems(structuredClone(cartItems));
         if (quantity === 0) {
             delete cartData[itemId];
         } else {
             cartData[itemId] = quantity;
         }
-        setCartItems(cartData)
+        setCartItems(sanitizeCartItems(cartData))
         if (user) {
             try {
                 const token = await getToken()
@@ -121,9 +122,10 @@ export const AppContextProvider = (props) => {
 
     const getCartCount = () => {
         let totalCount = 0;
-        for (const items in cartItems) {
-            if (cartItems[items] > 0) {
-                totalCount += cartItems[items];
+        const sanitizedCartItems = sanitizeCartItems(cartItems);
+        for (const items in sanitizedCartItems) {
+            if (sanitizedCartItems[items] > 0) {
+                totalCount += sanitizedCartItems[items];
             }
         }
         return totalCount;
@@ -131,10 +133,11 @@ export const AppContextProvider = (props) => {
 
     const getCartAmount = () => {
         let totalAmount = 0;
-        for (const items in cartItems) {
+        const sanitizedCartItems = sanitizeCartItems(cartItems);
+        for (const items in sanitizedCartItems) {
             let itemInfo = products.find((product) => product._id === items);
-            if (cartItems[items] > 0 && itemInfo) {
-                totalAmount += itemInfo.offerPrice * cartItems[items];
+            if (sanitizedCartItems[items] > 0 && itemInfo) {
+                totalAmount += itemInfo.offerPrice * sanitizedCartItems[items];
             }
         }
         return Math.floor(totalAmount * 100) / 100;

@@ -2,6 +2,7 @@ import { getAuth } from "@clerk/nextjs/server";
 import User from "@/models/User";
 import { NextResponse } from "next/server";
 import connectDB from "@/config/db";
+import { sanitizeCartItems } from "@/lib/cartUtils.mjs";
 
 export async function POST(request) {
     try {
@@ -12,7 +13,7 @@ export async function POST(request) {
         await connectDB();
         const user = await User.findById(userId);
 
-        user.cartItems = cartData;
+        user.cartItems = sanitizeCartItems(cartData);
         await user.save();
 
         return NextResponse.json({ success: true, message: "Cart updated successfully" })

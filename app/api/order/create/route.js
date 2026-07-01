@@ -6,6 +6,16 @@ import User from "@/models/User";
 import Order from "@/models/Order";
 import connectDB from "@/config/db";
 
+function normalizeOrderItems(items = []) {
+    return (Array.isArray(items) ? items : [])
+        .filter((item) => item && item.product)
+        .map((item) => ({
+            product: String(item.product),
+            quantity: Number(item.quantity),
+        }))
+        .filter((item) => Number.isFinite(item.quantity) && item.quantity > 0);
+}
+
 
 export async function POST(request) {
 
@@ -17,27 +27,36 @@ export async function POST(request) {
             return NextResponse.json({ success: false, message: "User not authenticated" }, { status: 401 })
         }
 
-        if ((!address && !customPhone) || items.length === 0) {
+        const normalizedItems = normalizeOrderItems(items);
+
+        if ((!address && !customPhone) || normalizedItems.length === 0) {
             return NextResponse.json({ success: false, message: "invalid data and items are required" })
         }
 
         // Connect to database first
         await connectDB();
 
-        // calculate amount using items - fixed async reduce
         let amount = 0;
-        for (const item of items) {
+        const validItems = [];
+        const invalidItems = [];
+
+        for (const item of normalizedItems) {
             const product = await Product.findById(item.product);
             if (!product) {
-                return NextResponse.json({ success: false, message: `Product ${item.product} not found` })
+                invalidItems.push(item);
+                continue;
             }
             amount += product.offerPrice * item.quantity;
+            validItems.push(item);
         }
 
-        // Create order directly
+        if (validItems.length === 0) {
+            return NextResponse.json({ success: false, message: "No valid products found in your cart", invalidItems }, { status: 400 })
+        }
+
         const order = await Order.create({
             userId,
-            items,
+            items: validItems,
             amount,
             address: address || "whatsapp-order",
             date: new Date().getTime(),
@@ -63,7 +82,7 @@ export async function POST(request) {
             await user.save();
         }
 
-        return NextResponse.json({ success: true, message: "order placed successfully", orderId: order._id })
+        return NextResponse.json({ success: true, message: "order placed successfully", orderId: order._id, removedItems: invalidItems })
     } catch (error) {
         console.log("Order creation error:", error)
         return NextResponse.json({ success: false, message: error.message }, { status: 500 })
