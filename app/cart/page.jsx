@@ -55,8 +55,7 @@ const Cart = () => {
                               alt={product.name}
                               className="w-16 h-auto object-cover mix-blend-multiply"
                               width={1280}
-                              height={720}
-                            />
+                              height={720} />
                           </div>
                           <button
                             className="md:hidden text-xs text-orange-600 mt-1"
@@ -75,27 +74,25 @@ const Cart = () => {
                           </button>
                         </div>
                       </td>
-                      <td className="py-4 md:px-4 px-1 text-gray-600">${product.offerPrice}</td>
+                      <td className="py-4 md:px-4 px-1 text-gray-600">SDG {product.offerPrice}</td>
                       <td className="py-4 md:px-4 px-1">
                         <div className="flex items-center md:gap-2 gap-1">
                           <button onClick={() => updateCartQuantity(product._id, cartItems[itemId] - 1)}>
                             <Image
                               src={assets.decrease_arrow}
                               alt="decrease_arrow"
-                              className="w-4 h-4"
-                            />
+                              className="w-4 h-4" />
                           </button>
                           <input onChange={e => updateCartQuantity(product._id, Number(e.target.value))} type="number" value={cartItems[itemId]} className="w-8 border text-center appearance-none"></input>
                           <button onClick={() => addToCart(product._id)}>
                             <Image
                               src={assets.increase_arrow}
                               alt="increase_arrow"
-                              className="w-4 h-4"
-                            />
+                              className="w-4 h-4" />
                           </button>
                         </div>
                       </td>
-                      <td className="py-4 md:px-4 px-1 text-gray-600">${(product.offerPrice * cartItems[itemId]).toFixed(2)}</td>
+                      <td className="py-4 md:px-4 px-1 text-gray-600">SDG {(product.offerPrice * cartItems[itemId]).toFixed(2)}</td>
                     </tr>
                   );
                 })}

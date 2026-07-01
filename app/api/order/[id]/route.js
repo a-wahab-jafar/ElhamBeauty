@@ -1,0 +1,76 @@
+import { getAuth } from "@clerk/nextjs/server";
+import authSeller from "@/lib/authSeller";
+import { NextResponse } from "next/server";
+import connectDB from "@/config/db";
+import Order from "@/models/Order";
+
+export async function PATCH(request, { params }) {
+    try {
+        const { userId } = getAuth(request);
+        const { id } = params;
+
+        if (!userId) {
+            return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
+        }
+
+        const isSeller = await authSeller(userId);
+        if (!isSeller) {
+            return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
+        }
+
+        const orderId = id?.toString()?.trim();
+        if (!orderId || orderId.length !== 24) {
+            return NextResponse.json({ success: false, message: "Invalid order id" }, { status: 400 });
+        }
+
+        const body = await request.json();
+        const status = body?.status || "approved";
+
+        await connectDB();
+        const order = await Order.findByIdAndUpdate(orderId, { status }, { new: true });
+
+        if (!order) {
+            return NextResponse.json({ success: false, message: "Order not found" }, { status: 404 });
+        }
+
+        return NextResponse.json({ success: true, order });
+    } catch (error) {
+        return NextResponse.json({ success: false, message: error.message }, { status: 500 });
+    }
+}
+
+export async function OPTIONS() {
+    return new Response(null, {
+        status: 204,
+        headers: {
+            Allow: "PATCH, DELETE, OPTIONS"
+        }
+    });
+}
+
+export async function DELETE(request, { params }) {
+    try {
+        const { userId } = getAuth(request);
+        const { id } = params;
+
+        if (!userId) {
+            return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
+        }
+
+        const isSeller = await authSeller(userId);
+        if (!isSeller) {
+            return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
+        }
+
+        await connectDB();
+        const order = await Order.findByIdAndDelete(id);
+
+        if (!order) {
+            return NextResponse.json({ success: false, message: "Order not found" }, { status: 404 });
+        }
+
+        return NextResponse.json({ success: true, message: "Order deleted successfully" });
+    } catch (error) {
+        return NextResponse.json({ success: false, message: error.message }, { status: 500 });
+    }
+}

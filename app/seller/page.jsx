@@ -2,8 +2,13 @@
 import React, { useState } from "react";
 import { assets } from "@/assets/assets";
 import Image from "next/image";
+import { useAppContext } from "@/context/AppContext";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
 const AddProduct = () => {
+
+  const { getToken } = useAppContext()
 
   const [files, setFiles] = useState([]);
   const [name, setName] = useState('');
@@ -11,9 +16,51 @@ const AddProduct = () => {
   const [category, setCategory] = useState('Earphone');
   const [price, setPrice] = useState('');
   const [offerPrice, setOfferPrice] = useState('');
+  const [status, setStatus] = useState('available');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+
+    formData.append("name", name);
+    formData.append("description", description);
+    formData.append("category", category);
+    formData.append("price", price);
+    formData.append("offerPrice", offerPrice);
+    formData.append("status", status);
+
+    for (let i = 0; i < files.length; i++) {
+      formData.append("images", files[i]);
+    }
+
+    try {
+
+      const token = await getToken();
+
+      const { data } = await axios.post("/api/product/add", formData,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      if (data.success) {
+        toast.success(data.message)
+        setFiles([])
+        setName('')
+        setDescription('')
+        setCategory('Earphone')
+        setPrice('')
+        setOfferPrice('')
+          setStatus('available')
+      } else {
+        toast.error(data.message)
+      }
+
+    } catch (error) {
+      toast.error(error.message)
+    }
+
+    
 
   };
 
@@ -122,6 +169,21 @@ const AddProduct = () => {
               value={offerPrice}
               required
             />
+          </div>
+          <div className="flex flex-col gap-1 w-40">
+            <label className="text-base font-medium" htmlFor="status">
+              Product Status
+            </label>
+            <select
+              id="status"
+              className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40"
+              onChange={(e) => setStatus(e.target.value)}
+              value={status}
+            >
+              <option value="available">Available</option>
+              <option value="coming_soon">Coming Soon</option>
+              <option value="out_of_stock">Out of Stock</option>
+            </select>
           </div>
         </div>
         <button type="submit" className="px-8 py-2.5 bg-orange-600 text-white font-medium rounded">
