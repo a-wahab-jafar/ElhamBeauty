@@ -22,16 +22,16 @@ const Navbar = () => {
       />
       <div className="flex items-center gap-4 lg:gap-8 max-md:hidden">
         <Link href="/" className="hover:text-[var(--foreground)]/80 transition">
-          Home
+          الرئيسية
         </Link>
         <Link href="/all-products" className="hover:text-[var(--foreground)]/80 transition">
-          Shop
+          المتجر
         </Link>
         <Link href="/" className="hover:text-[var(--foreground)]/80 transition">
-          About Us
+          اٍتصل بنا
         </Link>
         <Link href="/" className="hover:text-[var(--foreground)]/80 transition">
-          Contact
+          نبذة عنا
         </Link>
 
         {isSeller && <button onClick={() => router.push('/seller')} className="text-xs border border-[var(--border)] bg-[var(--surface)] px-4 py-1.5 rounded-full hover:bg-[var(--surface-muted)] transition">Seller Dashboard</button>}
@@ -43,7 +43,6 @@ const Navbar = () => {
           <span>{isDarkMode ? "☀️" : "🌙"}</span>
           <span className="text-xs">{isDarkMode ? "Light" : "Dark"}</span>
         </button>
-        <Image className="w-4 h-4" src={assets.search_icon} alt="search icon" />
         {
          user
           ? <>

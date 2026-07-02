@@ -20,6 +20,9 @@ import heart_icon from "./heart_icon.svg";
 import star_icon from "./star_icon.svg";
 import redirect_icon from "./redirect_icon.svg";
 import star_dull_icon from "./star_dull_icon.svg";
+import header_clere from "./header_clere.png";
+import header_levia from "./header_levia.png";
+import header_paris from "./header_paris.png";
 import header_headphone_image from "./header_headphone_image.png";
 import header_playstation_image from "./header_playstation_image.png";
 import header_macbook_image from "./header_macbook_image.png";
@@ -36,6 +39,9 @@ import projector_image from "./projector_image.png";
 import playstation_image from "./playstation_image.png";
 import girl_with_headphone_image from "./girl_with_headphone_image.png";
 import girl_with_earphone_image from "./girl_with_earphone_image.png";
+import girl_with_levia_lotion from "./girl_with_levia_lotion.png";
+import girl_with_clere_cream from "./girl_with_clere_cream.png";
+import girl_with_paris_lotion from "./girl_with_paris_lotion.png";
 import md_controller_image from "./md_controller_image.png";
 import sm_controller_image from "./sm_controller_image.png";
 import jbl_soundbox_image from "./jbl_soundbox_image.png";
@@ -46,6 +52,8 @@ import product_details_page_apple_earphone_image2 from "./product_details_page_a
 import product_details_page_apple_earphone_image3 from "./product_details_page_apple_earphone_image3.png";
 import product_details_page_apple_earphone_image4 from "./product_details_page_apple_earphone_image4.png";
 import product_details_page_apple_earphone_image5 from "./product_details_page_apple_earphone_image5.png";
+import banner_1 from "./banner_1.png";
+import banner_2 from "./banner_2.png";
 
 export const assets = {
   logo,
@@ -70,6 +78,9 @@ export const assets = {
   star_icon,
   redirect_icon,
   star_dull_icon,
+  header_clere,
+  header_levia,
+  header_paris,
   header_headphone_image,
   header_playstation_image,
   header_macbook_image,
@@ -86,6 +97,9 @@ export const assets = {
   playstation_image,
   girl_with_headphone_image,
   girl_with_earphone_image,
+  girl_with_levia_lotion,
+  girl_with_clere_cream,
+  girl_with_paris_lotion,
   md_controller_image,
   sm_controller_image,
   jbl_soundbox_image,
@@ -95,7 +109,9 @@ export const assets = {
   product_details_page_apple_earphone_image3,
   product_details_page_apple_earphone_image4,
   product_details_page_apple_earphone_image5,
-  checkmark
+  checkmark,
+  banner_1,
+  banner_2
 };
 
 export const BagIcon = () => {

@@ -9,28 +9,26 @@ const Footer = () => {
         <div className="w-4/5">
           <Image className="w-28 md:w-32" src={assets.logo} alt="logo" />
           <p className="mt-6 text-sm">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
+            مرحبًا بكم في متجرنا! نحن ملتزمون بتقديم أفضل المنتجات والخدمات لعملائنا. استمتعوا بتجربة تسوق ممتعة ومريحة معنا.
+            
           </p>
         </div>
 
         <div className="w-1/2 flex items-center justify-start md:justify-center">
           <div>
-            <h2 className="font-medium text-[var(--foreground)] mb-5">Company</h2>
+            <h2 className="font-medium text-[var(--foreground)] mb-5">متجرنا</h2>
             <ul className="text-sm space-y-2">
               <li>
-                <a className="hover:underline transition" href="#">Home</a>
+                <a className="hover:underline transition" href="#">الرئيسية</a>
               </li>
               <li>
-                <a className="hover:underline transition" href="#">About us</a>
+                <a className="hover:underline transition" href="#">المتجر</a>
               </li>
               <li>
-                <a className="hover:underline transition" href="#">Contact us</a>
+                <a className="hover:underline transition" href="#">اٍتصل بنا</a>
               </li>
               <li>
-                <a className="hover:underline transition" href="#">Privacy policy</a>
+                <a className="hover:underline transition" href="#">نبذة عنا</a>
               </li>
             </ul>
           </div>
@@ -38,7 +36,7 @@ const Footer = () => {
 
         <div className="w-1/2 flex items-start justify-start md:justify-center">
           <div>
-            <h2 className="font-medium text-[var(--foreground)] mb-5">Get in touch</h2>
+            <h2 className="font-medium text-[var(--foreground)] mb-5">تواصل معنا عبر</h2>
             <div className="text-sm space-y-2">
               <p>+249-90-508-1728</p>
               <p>elham.beauty617@gmail.com</p>

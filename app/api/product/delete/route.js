@@ -22,9 +22,18 @@ export async function DELETE(request) {
 
     await connectDB();
 
+    const existingProduct = await Product.findById(productId);
+
+    if (!existingProduct) {
+      return NextResponse.json({ success: false, message: "Product not found or already removed" });
+    }
+
+    if (existingProduct.userId && existingProduct.userId !== userId) {
+      return NextResponse.json({ success: false, message: "Product not found or already removed" });
+    }
+
     const deletedProduct = await Product.findOneAndDelete({
       _id: productId,
-      userId,
     });
 
     if (!deletedProduct) {
