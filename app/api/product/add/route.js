@@ -4,6 +4,7 @@ import authSeller from "@/lib/authSeller";
 import { NextResponse } from "next/server";
 import connectDB from "@/config/db";
 import Product from "@/models/Product";
+import { normalizeCategory } from "@/lib/categoryUtils";
 
 
 
@@ -61,13 +62,14 @@ export async function POST(request) {
     )
 
     const image = result.map(result => result.secure_url);
+    const normalizedCategory = normalizeCategory(category);
 
     await connectDB();
     const newProduct = await Product.create({
         userId,
         name,
         description,
-        category,
+        category: normalizedCategory,
         price:Number(price),
         offerPrice:Number(offerPrice),
       status,

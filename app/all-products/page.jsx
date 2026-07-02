@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { useAppContext } from "@/context/AppContext";
 import { useMemo, useState } from "react";
 import { ProductCardSkeleton } from "@/components/Fallback";
+import { CATEGORY_OPTIONS, normalizeCategory } from "@/lib/categoryUtils";
 
 const AllProducts = () => {
 
@@ -13,20 +14,21 @@ const AllProducts = () => {
     const [searchQuery, setSearchQuery] = useState("");
 
     const categories = useMemo(() => {
-        const uniqueCategories = [...new Set(products.map((product) => product.category).filter(Boolean))];
-        return ["All", ...uniqueCategories];
+        const uniqueCategories = [...new Set(products.map((product) => normalizeCategory(product.category)).filter(Boolean))];
+        return ["All", ...CATEGORY_OPTIONS, ...uniqueCategories.filter((category) => !CATEGORY_OPTIONS.includes(category))];
     }, [products]);
 
     const filteredProducts = useMemo(() => {
         const normalizedQuery = searchQuery.trim().toLowerCase();
 
         return products.filter((product) => {
-            const matchesCategory = selectedCategory === "All" || product.category === selectedCategory;
+            const normalizedCategory = normalizeCategory(product.category);
+            const matchesCategory = selectedCategory === "All" || normalizedCategory === selectedCategory;
             if (!normalizedQuery) {
                 return matchesCategory;
             }
 
-            const searchableText = `${product.name || ""} ${product.description || ""} ${product.category || ""}`.toLowerCase();
+            const searchableText = `${product.name || ""} ${product.description || ""} ${normalizedCategory || ""}`.toLowerCase();
             return matchesCategory && searchableText.includes(normalizedQuery);
         });
     }, [products, selectedCategory, searchQuery]);

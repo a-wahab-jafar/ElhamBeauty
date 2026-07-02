@@ -4,6 +4,7 @@ import authSeller from "@/lib/authSeller";
 import { NextResponse } from "next/server";
 import Product from "@/models/Product";
 import connectDB from "@/config/db";
+import { normalizeCategory } from "@/lib/categoryUtils";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -54,7 +55,7 @@ export async function PUT(request) {
     }
 
     if (typeof category === "string" && category.trim()) {
-      updateData.category = category.trim();
+      updateData.category = normalizeCategory(category);
     }
 
     if (price !== undefined && price !== "") {
