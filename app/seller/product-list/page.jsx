@@ -91,7 +91,7 @@ const ProductList = () => {
       description: product.description || "",
       price: product.price?.toString() || "",
       offerPrice: product.offerPrice?.toString() || "",
-      category: product.category || "Earphone",
+      category: product.category || "Cream",
       status: product.status || "available",
     });
     setEditFiles(Array(4).fill(null));
@@ -101,7 +101,7 @@ const ProductList = () => {
   const closeEditModal = () => {
     setEditOpen(false);
     setEditProduct(null);
-    setEditForm({ name: "", description: "", price: "", offerPrice: "", category: "Earphone", status: "available" });
+    setEditForm({ name: "", description: "", price: "", offerPrice: "", category: "Cream", status: "available" });
     setEditFiles(Array(4).fill(null));
   };
 
@@ -440,13 +440,9 @@ const ProductList = () => {
                     value={editForm.category}
                     onChange={handleEditFieldChange}
                   >
-                    <option value="Earphone">Earphone</option>
-                    <option value="Headphone">Headphone</option>
-                    <option value="Watch">Watch</option>
-                    <option value="Smartphone">Smartphone</option>
-                    <option value="Laptop">Laptop</option>
-                    <option value="Camera">Camera</option>
-                    <option value="Accessories">Accessories</option>
+                    <option value="Cream">Cream</option>
+                    <option value="Lotion">Lotion</option>
+                    <option value="Make-up">Make-up</option>
                   </select>
                 </div>
                 <div className="flex flex-col gap-1 w-32">
