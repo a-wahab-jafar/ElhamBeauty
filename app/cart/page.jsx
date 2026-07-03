@@ -35,7 +35,7 @@ const Cart = () => {
                      الكمية
                   </th>
                   <th className="pb-6 md:px-4 px-1 text-gray-600 font-medium">
-                    المجموع الفرعي
+                    المجموع 
                   </th>
                 </tr>
               </thead>
