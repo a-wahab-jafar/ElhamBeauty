@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.39.5",
+    "@vercel/analytics": "^2.0.1",
     "axios": "^1.18.1",
     "cloudinary": "^2.10.0",
     "inngest": "^4.11.0",

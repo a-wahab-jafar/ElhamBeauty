@@ -3,6 +3,7 @@ import "./globals.css";
 import { AppContextProvider } from "@/context/AppContext";
 import { Toaster } from "react-hot-toast";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Analytics } from "@vercel/analytics/next"
 
 const outfit = Outfit({ subsets: ['latin'], weight: ["300", "400", "500"], variable: "--font-outfit" });
 const tajawal = Tajawal({ subsets: ['arabic'], weight: ["300", "400", "500", "700"], variable: "--font-arabic" });
@@ -14,15 +15,18 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
+    <>
     <ClerkProvider>
       <html lang="en">
-        <body className={`${outfit.variable} ${tajawal.variable} antialiased min-h-screen bg-[var(--background)] text-[var(--foreground)] transition-colors duration-300`} >
+        <body className={`${outfit.variable} ${tajawal.variable} antialiased min-h-screen bg-[var(--background)] text-[var(--foreground)] transition-colors duration-300`}>
           <Toaster />
           <AppContextProvider>
             {children}
           </AppContextProvider>
         </body>
       </html>
-      </ClerkProvider>
+    </ClerkProvider>
+    <Analytics />
+    </>
   );
 }
