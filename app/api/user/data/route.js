@@ -13,7 +13,7 @@ export async function GET(request) {
         await connectDB()
         const user = await User.findById(userId)
         if (!user) {
-            return NextResponse.json({ success: false, message: "User not found" })
+            return NextResponse.json({ success: false, message: "wait 5 seconds for user to be synced" })
         }
         return NextResponse.json({ success: true, user})
     } catch (error) {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { assets } from "@/assets/assets";
 import Image from "next/image";
 
@@ -6,26 +7,34 @@ const HeaderSlider = () => {
   const sliderData = [
     {
       id: 1,
-      title: "Experience Pure Sound - Your Perfect Headphones Awaits!",
-      offer: "Limited Time Offer 30% Off",
-      buttonText1: "Buy now",
+      title: "لوشن معطر يمنح البشرة ترطيبًا يدوم طويلًا مع عطر أنيق ولمسة ناعمة، مناسب للاستخدام اليومي",
+      offer: "PARIS : Perfumed Body Lotion",
+      buttonText1: "إشتري الآن",
       buttonText2: "Find more",
       imgSrc: assets.header_paris,
     },
     {
       id: 2,
-      title: "Next-Level Gaming Starts Here - Discover PlayStation 5 Today!",
-      offer: "Hurry up only few lefts!",
-      buttonText1: "Shop Now",
+      title: "كريم للجسم بتركيبة مغذية يساعد على ترطيب البشرة وحمايتها من الجفاف، ليمنحها ملمسًا ناعمًا وصحيًا",
+      offer: "Clere : Body Cream",
+      buttonText1: "تسوق الآن",
       buttonText2: "Explore Deals",
       imgSrc: assets.header_clere,
     },
     {
       id: 3,
-      title: "Power Meets Elegance - Apple MacBook Pro is Here for you!",
-      offer: "Exclusive Deal 40% Off",
-      buttonText1: "Order Now",
+      title: "زيت شعر غني بخلاصة البصل يساعد على تغذية الشعر وتقوية جذوره، ويمنحه مظهرًا أكثر كثافة ولمعانًا مع الاستخدام المنتظم.",
+      offer: "REVEL : Onion Enriched Hair Oil",
+      buttonText1: "أطلب الآن",
       buttonText2: "Learn More",
+      imgSrc: assets.header_revel_oil,
+    },
+    {
+      id: 4,
+      title: "لوشن مرطب بتركيبة غنية يساعد على ترطيب البشرة بعمق، ويمنحها نعومة ومرونة طوال اليوم",
+      offer: "Levia : Body Lotion Deep Moisturizing",
+      buttonText1: "إشتري الآن",
+      buttonText2: "See Details",
       imgSrc: assets.header_levia,
     },
   ];
@@ -54,18 +63,18 @@ const HeaderSlider = () => {
         {sliderData.map((slide, index) => (
           <div
             key={slide.id}
-            className="flex flex-col-reverse md:flex-row items-center justify-between bg-[#E6E9F2] py-8 md:px-14 px-5 mt-6 rounded-xl min-w-full"
+            className="flex flex-col-reverse md:flex-row items-center justify-between bg-[#E6E9F2] dark:bg-slate-800 py-8 md:px-14 px-5 mt-6 rounded-xl min-w-full"
           >
             <div className="md:pl-8 mt-10 md:mt-0">
               <p className="md:text-base text-orange-600 pb-1">{slide.offer}</p>
-              <h1 className="max-w-lg md:text-[40px] md:leading-[48px] text-2xl font-semibold">
+              <h1 className="max-w-lg md:text-[40px] md:leading-[48px] text-2xl font-semibold dark:text-white">
                 {slide.title}
               </h1>
               <div className="flex items-center mt-4 md:mt-6 ">
-                <button className="md:px-10 px-7 md:py-2.5 py-2 bg-orange-600 rounded-full text-white font-medium">
+                <Link href="/all-products" className="md:px-10 px-7 md:py-2.5 py-2 bg-orange-600 rounded-full text-white font-medium text-center">
                   {slide.buttonText1}
-                </button>
-                <button className="group flex items-center gap-2 px-6 py-2.5 font-medium">
+                </Link>
+                <button className="group flex items-center gap-2 px-6 py-2.5 font-medium dark:text-white dark:hover:text-orange-600 transition">
                   {slide.buttonText2}
                   <Image className="group-hover:translate-x-1 transition" src={assets.arrow_icon} alt="arrow_icon" />
                 </button>
@@ -88,7 +97,7 @@ const HeaderSlider = () => {
             key={index}
             onClick={() => handleSlideChange(index)}
             className={`h-2 w-2 rounded-full cursor-pointer ${
-              currentSlide === index ? "bg-orange-600" : "bg-gray-500/30"
+              currentSlide === index ? "bg-orange-600" : "bg-gray-500/30 dark:bg-gray-600/50"
             }`}
           ></div>
         ))}

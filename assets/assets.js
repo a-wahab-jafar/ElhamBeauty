@@ -23,6 +23,7 @@ import star_dull_icon from "./star_dull_icon.svg";
 import header_clere from "./header_clere.png";
 import header_levia from "./header_levia.png";
 import header_paris from "./header_paris.png";
+import header_revel_oil from "./header_revel_oil.png";
 import header_headphone_image from "./header_headphone_image.png";
 import header_playstation_image from "./header_playstation_image.png";
 import header_macbook_image from "./header_macbook_image.png";
@@ -81,6 +82,7 @@ export const assets = {
   header_clere,
   header_levia,
   header_paris,
+  header_revel_oil,
   header_headphone_image,
   header_playstation_image,
   header_macbook_image,

@@ -9,6 +9,7 @@ import { useParams } from "next/navigation";
 import { ProductDetailSkeleton } from "@/components/Fallback";
 import { useAppContext } from "@/context/AppContext";
 import React from "react";
+import toast from "react-hot-toast";
 
 const Product = () => {
 
@@ -30,6 +31,31 @@ const Product = () => {
         : productData?.status === 'out_of_stock'
             ? 'bg-red-600/80 text-white'
             : '';
+
+    const isDisabled = productData?.status === 'coming_soon' || productData?.status === 'out_of_stock';
+
+    const handleAddToCartClick = () => {
+        if (isDisabled) {
+            const message = productData?.status === 'coming_soon'
+                ? '🟢 This product is Coming Soon'
+                : '🔴 This product is Out of Stock';
+            toast.error(message);
+            return;
+        }
+        addToCart(productData._id);
+    };
+
+    const handleBuyNowClick = () => {
+        if (isDisabled) {
+            const message = productData?.status === 'coming_soon'
+                ? '🟢 This product is Coming Soon'
+                : '🔴 This product is Out of Stock';
+            toast.error(message);
+            return;
+        }
+        addToCart(productData._id);
+        router.push('/cart');
+    };
 
     const fetchProductData = async () => {
         const product = products.find(product => product._id === id);
@@ -130,18 +156,40 @@ const Product = () => {
                     </div>
 
                     <div className="flex items-center mt-10 gap-4">
-                        <button onClick={() => addToCart(productData._id)} className="w-full py-3.5 bg-[var(--surface)] text-[var(--foreground)]/90 hover:bg-[var(--surface-muted)] border border-[var(--border)] transition">
-                            Add to Cart
+                        <button 
+                            onClick={handleAddToCartClick}
+                            disabled={isDisabled}
+                            className={`w-full py-3.5 transition relative flex items-center justify-center gap-2
+                                ${isDisabled
+                                    ? productData?.status === 'coming_soon'
+                                        ? 'bg-green-600/60 text-white cursor-not-allowed'
+                                        : 'bg-red-600/60 text-white cursor-not-allowed'
+                                    : 'bg-[var(--surface)] text-[var(--foreground)]/90 hover:bg-[var(--surface-muted)] border border-[var(--border)]'
+                                }`}
+                        >
+                            {isDisabled && <span className="text-2xl font-bold">✕</span>}
+                            أضف إلى السلة 
                         </button>
-                        <button onClick={() => { addToCart(productData._id); router.push('/cart') }} className="w-full py-3.5 bg-orange-500 text-white hover:bg-orange-600 transition">
-                            Buy now
+                        <button 
+                            onClick={handleBuyNowClick}
+                            disabled={isDisabled}
+                            className={`w-full py-3.5 transition flex items-center justify-center gap-2
+                                ${isDisabled
+                                    ? productData?.status === 'coming_soon'
+                                        ? 'bg-green-600/60 text-white cursor-not-allowed'
+                                        : 'bg-red-600/60 text-white cursor-not-allowed'
+                                    : 'bg-orange-500 text-white hover:bg-orange-600'
+                                }`}
+                        >
+                            {isDisabled && <span className="text-2xl font-bold">✕</span>}
+                            إشتري الآن
                         </button>
                     </div>
                 </div>
             </div>
             <div className="flex flex-col items-center">
                 <div className="flex flex-col items-center mb-4 mt-16">
-                    <p className="text-3xl font-medium">Featured <span className="font-medium text-orange-600">Products</span></p>
+                    <p className="text-3xl font-medium">المزيد من <span className="font-medium text-orange-600">المنتجات</span></p>
                     <div className="w-28 h-0.5 bg-orange-600 mt-2"></div>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-6 pb-14 w-full">

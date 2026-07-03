@@ -32,7 +32,7 @@ const ProductCard = ({ product }) => {
                         <span>{product.status === 'coming_soon' ? 'Coming Soon' : 'Out of Stock'}</span>
                     </div>
                 ) : null}
-                <button className="absolute top-2 right-2 bg-white p-2 rounded-full shadow-md">
+                <button className="absolute top-2 right-2 bg-white dark:bg-slate-700 p-2 rounded-full shadow-md">
                     <Image
                         className="h-3 w-3"
                         src={assets.heart_icon}
@@ -64,7 +64,7 @@ const ProductCard = ({ product }) => {
             <div className="flex items-end justify-between w-full mt-1">
                 <p className="text-base font-medium">{currency}{product.offerPrice}</p>
                 <button className=" max-sm:hidden px-4 py-1.5 text-[var(--foreground)]/70 border border-[var(--border)] rounded-full text-xs hover:bg-[var(--surface-muted)] transition">
-                    Buy now
+                   إشتري الآن
                 </button>
             </div>
         </div>

@@ -24,7 +24,7 @@ export async function POST(request) {
         const { items, address, customName, customPhone } = await request.json();
 
         if (!userId) {
-            return NextResponse.json({ success: false, message: "User not authenticated" }, { status: 401 })
+            return NextResponse.json({ success: false, message: "User have to sign in" })
         }
 
         const normalizedItems = normalizeOrderItems(items);

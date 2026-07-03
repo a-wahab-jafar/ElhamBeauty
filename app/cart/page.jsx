@@ -17,7 +17,7 @@ const Cart = () => {
         <div className="flex-1">
           <div className="flex items-center justify-between mb-8 border-b border-gray-500/30 pb-6">
             <p className="text-2xl md:text-3xl text-gray-500">
-              Your <span className="font-medium text-orange-600">Cart</span>
+              سلة التسوق <span className="font-medium text-orange-600">الخاصة بك</span>
             </p>
             <p className="text-lg md:text-xl text-gray-500/80">{getCartCount()} Items</p>
           </div>
@@ -26,16 +26,16 @@ const Cart = () => {
               <thead className="text-left">
                 <tr>
                   <th className="text-nowrap pb-6 md:px-4 px-1 text-gray-600 font-medium">
-                    Product Details
+                    تفاصيل المنتج
                   </th>
                   <th className="pb-6 md:px-4 px-1 text-gray-600 font-medium">
-                    Price
+                    السعر
                   </th>
                   <th className="pb-6 md:px-4 px-1 text-gray-600 font-medium">
-                    Quantity
+                     الكمية
                   </th>
                   <th className="pb-6 md:px-4 px-1 text-gray-600 font-medium">
-                    Subtotal
+                    المجموع الفرعي
                   </th>
                 </tr>
               </thead>
@@ -49,11 +49,11 @@ const Cart = () => {
                     <tr key={itemId}>
                       <td className="flex items-center gap-4 py-4 md:px-4 px-1">
                         <div>
-                          <div className="rounded-lg overflow-hidden bg-gray-500/10 p-2">
+                          <div className="rounded-lg overflow-hidden bg-gray-500/10 dark:bg-white/5 p-2">
                             <Image
                               src={product.image[0]}
                               alt={product.name}
-                              className="w-16 h-auto object-cover mix-blend-multiply"
+                              className="w-16 h-auto object-cover"
                               width={1280}
                               height={720} />
                           </div>
