@@ -34,7 +34,7 @@ export async function PUT(request) {
       payload = await request.json();
     }
 
-    const { productId, status, name, description, category, price, offerPrice } = payload;
+    const { productId, status, name, description, category, price, offerPrice, quantity } = payload;
 
     if (!productId) {
       return NextResponse.json({ success: false, message: "Product ID is required" });
@@ -64,6 +64,11 @@ export async function PUT(request) {
 
     if (offerPrice !== undefined && offerPrice !== "") {
       updateData.offerPrice = Number(offerPrice);
+    }
+
+    if (quantity !== undefined && quantity !== "") {
+      const parsedQuantity = Number(quantity);
+      updateData.quantity = Number.isFinite(parsedQuantity) ? Math.max(0, Math.floor(parsedQuantity)) : 0;
     }
 
     if (files.length > 0) {
@@ -109,6 +114,25 @@ export async function PUT(request) {
 
     if (existingProduct.userId && existingProduct.userId !== userId) {
       return NextResponse.json({ success: false, message: "Product not found or not authorized" });
+    }
+
+    let resolvedStatus = typeof status === "string" && status.trim() ? status.trim() : existingProduct.status;
+
+    if (quantity !== undefined && quantity !== "") {
+      const parsedQuantity = Number(quantity);
+      const normalizedQuantity = Number.isFinite(parsedQuantity) ? Math.max(0, Math.floor(parsedQuantity)) : 0;
+
+      if (normalizedQuantity <= 0) {
+        resolvedStatus = "out_of_stock";
+      } else if (typeof status === "string" && status.trim()) {
+        resolvedStatus = status.trim() === "out_of_stock" ? "available" : status.trim();
+      } else if (existingProduct.status === "out_of_stock") {
+        resolvedStatus = "available";
+      }
+    }
+
+    if (resolvedStatus) {
+      updateData.status = resolvedStatus;
     }
 
     const updated = await Product.findOneAndUpdate(

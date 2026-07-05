@@ -19,16 +19,16 @@ const Footer = () => {
             <h2 className="font-medium text-[var(--foreground)] mb-5">متجرنا</h2>
             <ul className="text-sm space-y-2">
               <li>
-                <a className="hover:underline transition" href="#">الرئيسية</a>
+                <a className="hover:underline transition" href="/">الرئيسية</a>
               </li>
               <li>
-                <a className="hover:underline transition" href="#">المتجر</a>
+                <a className="hover:underline transition" href="/all-products">المتجر</a>
               </li>
               <li>
-                <a className="hover:underline transition" href="#">اٍتصل بنا</a>
+                <a className="hover:underline transition" href="/contact">اٍتصل بنا</a>
               </li>
               <li>
-                <a className="hover:underline transition" href="#">نبذة عنا</a>
+                <a className="hover:underline transition" href="/about">نبذة عنا</a>
               </li>
             </ul>
           </div>

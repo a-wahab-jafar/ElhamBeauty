@@ -32,6 +32,7 @@ export async function POST(request) {
     const category = formData.get("category");
     const price = formData.get("price");
     const offerPrice = formData.get("offerPrice");
+    const quantity = formData.get("quantity");
     const status = formData.get("status") || 'available';
 
     const files = formData.getAll("images");
@@ -63,6 +64,11 @@ export async function POST(request) {
 
     const image = result.map(result => result.secure_url);
     const normalizedCategory = normalizeCategory(category);
+    const parsedQuantity = Number(quantity);
+    const normalizedQuantity = Number.isFinite(parsedQuantity) ? Math.max(0, Math.floor(parsedQuantity)) : 0;
+    const normalizedStatus = normalizedQuantity > 0
+      ? (status === 'out_of_stock' ? 'available' : status || 'available')
+      : 'out_of_stock';
 
     await connectDB();
     const newProduct = await Product.create({
@@ -72,7 +78,8 @@ export async function POST(request) {
         category: normalizedCategory,
         price:Number(price),
         offerPrice:Number(offerPrice),
-      status,
+        quantity: normalizedQuantity,
+        status: normalizedStatus,
         image,
         date: Date.now()
     })

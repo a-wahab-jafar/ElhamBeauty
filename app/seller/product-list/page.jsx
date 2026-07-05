@@ -23,6 +23,7 @@ const ProductList = () => {
     description: "",
     price: "",
     offerPrice: "",
+    quantity: "",
     category: "",
     status: "available",
   });
@@ -91,6 +92,7 @@ const ProductList = () => {
       description: product.description || "",
       price: product.price?.toString() || "",
       offerPrice: product.offerPrice?.toString() || "",
+      quantity: product.quantity?.toString() || "0",
       category: product.category || "Cream",
       status: product.status || "available",
     });
@@ -101,7 +103,7 @@ const ProductList = () => {
   const closeEditModal = () => {
     setEditOpen(false);
     setEditProduct(null);
-    setEditForm({ name: "", description: "", price: "", offerPrice: "", category: "Cream", status: "available" });
+    setEditForm({ name: "", description: "", price: "", offerPrice: "", quantity: "", category: "Cream", status: "available" });
     setEditFiles(Array(4).fill(null));
   };
 
@@ -130,6 +132,7 @@ const ProductList = () => {
       formData.append("description", editForm.description.trim());
       formData.append("price", editForm.price);
       formData.append("offerPrice", editForm.offerPrice);
+      formData.append("quantity", editForm.quantity);
       formData.append("category", editForm.category.trim());
       formData.append("status", editForm.status);
 
@@ -228,6 +231,10 @@ const ProductList = () => {
                         <p className="font-medium text-gray-900 dark:text-white">SDG {product.offerPrice}</p>
                       </div>
                       <div>
+                        <p className="text-xs uppercase tracking-wide text-gray-400 dark:text-gray-500">Quantity</p>
+                        <p className="font-medium text-gray-900 dark:text-white">{product.quantity ?? 0}</p>
+                      </div>
+                      <div>
                         <p className="text-xs uppercase tracking-wide text-gray-400 dark:text-gray-500">Status</p>
                         <div className="font-medium text-gray-900 dark:text-white">
                           <select
@@ -272,6 +279,7 @@ const ProductList = () => {
                     <th className="w-2/3 md:w-2/5 px-4 py-3 font-medium truncate">Product</th>
                     <th className="px-4 py-3 font-medium truncate">Category</th>
                     <th className="px-4 py-3 font-medium truncate">Price</th>
+                    <th className="px-4 py-3 font-medium truncate">Quantity</th>
                     <th className="px-4 py-3 font-medium truncate">Status</th>
                     <th className="px-4 py-3 font-medium truncate">Action</th>
                   </tr>
@@ -293,6 +301,7 @@ const ProductList = () => {
                       </td>
                       <td className="px-4 py-3 dark:text-white">{product.category}</td>
                       <td className="px-4 py-3 dark:text-white">SDG {product.offerPrice}</td>
+                      <td className="px-4 py-3 dark:text-white">{product.quantity ?? 0}</td>
                       <td className="px-4 py-3">
                         <select
                           className="outline-none rounded border border-gray-300 dark:border-gray-600 dark:bg-slate-800 dark:text-white text-sm px-2 py-1"
@@ -472,6 +481,22 @@ const ProductList = () => {
                     placeholder="0"
                     className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-300 dark:border-gray-600 dark:bg-slate-800 dark:text-white placeholder:dark:text-gray-500"
                     value={editForm.offerPrice}
+                    onChange={handleEditFieldChange}
+                    min="0"
+                    required
+                  />
+                </div>
+                <div className="flex flex-col gap-1 w-32">
+                  <label className="text-base font-medium dark:text-white" htmlFor="edit-quantity">
+                    Quantity
+                  </label>
+                  <input
+                    id="edit-quantity"
+                    type="number"
+                    name="quantity"
+                    placeholder="0"
+                    className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-300 dark:border-gray-600 dark:bg-slate-800 dark:text-white placeholder:dark:text-gray-500"
+                    value={editForm.quantity}
                     onChange={handleEditFieldChange}
                     min="0"
                     required

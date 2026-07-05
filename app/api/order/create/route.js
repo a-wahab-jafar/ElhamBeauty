@@ -46,6 +46,13 @@ export async function POST(request) {
                 invalidItems.push(item);
                 continue;
             }
+
+            const availableQuantity = Number(product.quantity ?? 0);
+            if (availableQuantity <= 0 || item.quantity > availableQuantity) {
+                invalidItems.push(item);
+                continue;
+            }
+
             amount += product.offerPrice * item.quantity;
             validItems.push(item);
         }
@@ -63,6 +70,16 @@ export async function POST(request) {
             customName,
             customPhone
         });
+
+        for (const item of validItems) {
+            const product = await Product.findById(item.product);
+            if (!product) continue;
+
+            const nextQuantity = Math.max(0, Number(product.quantity ?? 0) - item.quantity);
+            product.quantity = nextQuantity;
+            product.status = nextQuantity <= 0 ? "out_of_stock" : (product.status === "out_of_stock" ? "available" : product.status);
+            await product.save();
+        }
 
         await inngest.send({
             name: "order/created",

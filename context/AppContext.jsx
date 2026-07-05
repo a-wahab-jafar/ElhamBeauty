@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import { sanitizeCartItems } from "@/lib/cartUtils.mjs";
+import { clampQuantityToStock, sanitizeCartItems } from "@/lib/cartUtils.mjs";
 
 export const AppContext = createContext();
 
@@ -68,16 +68,35 @@ export const AppContextProvider = (props) => {
     }
 
     const addToCart = async (itemId) => {
+        const product = products.find((item) => item._id === itemId);
+
+        if (!product) {
+            toast.error("Product not found");
+            return;
+        }
+
+        const availableQuantity = Number(product.quantity ?? 0);
+        if (availableQuantity <= 0) {
+            toast.error("This product is out of stock");
+            return;
+        }
 
         let cartData = sanitizeCartItems(structuredClone(cartItems));
+        const currentQuantity = cartData[itemId] || 0;
+        const nextQuantity = currentQuantity + 1;
+
+        if (nextQuantity > availableQuantity) {
+            toast.error(`Only ${availableQuantity} item${availableQuantity > 1 ? "s" : ""} available`);
+            return;
+        }
+
         if (cartData[itemId]) {
-            cartData[itemId] += 1;
+            cartData[itemId] = nextQuantity;
         }
         else {
             cartData[itemId] = 1;
         }
         setCartItems(cartData);
-        
 
         if (user) {
             try {
@@ -96,12 +115,20 @@ export const AppContextProvider = (props) => {
     }
 
     const updateCartQuantity = async (itemId, quantity) => {
+        const product = products.find((item) => item._id === itemId);
 
         let cartData = sanitizeCartItems(structuredClone(cartItems));
         if (quantity === 0) {
             delete cartData[itemId];
         } else {
-            cartData[itemId] = quantity;
+            const availableQuantity = Number(product?.quantity ?? 0);
+            const clampedQuantity = availableQuantity > 0 ? clampQuantityToStock(quantity, availableQuantity) : 0;
+
+            if (clampedQuantity <= 0) {
+                delete cartData[itemId];
+            } else {
+                cartData[itemId] = clampedQuantity;
+            }
         }
         setCartItems(sanitizeCartItems(cartData))
         if (user) {

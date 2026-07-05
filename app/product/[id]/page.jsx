@@ -9,30 +9,35 @@ import { useParams } from "next/navigation";
 import { ProductDetailSkeleton } from "@/components/Fallback";
 import { useAppContext } from "@/context/AppContext";
 import React from "react";
+import axios from "axios";
 import toast from "react-hot-toast";
 
 const Product = () => {
 
     const { id } = useParams();
 
-    const { products, router, addToCart } = useAppContext()
+    const { products, router, addToCart, fetchProductData } = useAppContext()
 
     const [mainImage, setMainImage] = useState(null);
     const [productData, setProductData] = useState(null);
 
+    const quantityValue = Number(productData?.quantity);
+    const hasExplicitQuantity = Number.isFinite(quantityValue);
+    const isOutOfStock = hasExplicitQuantity ? quantityValue <= 0 : false;
+
     const statusLabel = productData?.status === 'coming_soon'
         ? 'Coming Soon'
-        : productData?.status === 'out_of_stock'
+        : productData?.status === 'out_of_stock' || isOutOfStock
             ? 'Out of Stock'
             : null;
 
     const statusClasses = productData?.status === 'coming_soon'
         ? 'bg-green-600/80 text-white'
-        : productData?.status === 'out_of_stock'
+        : productData?.status === 'out_of_stock' || isOutOfStock
             ? 'bg-red-600/80 text-white'
             : '';
 
-    const isDisabled = productData?.status === 'coming_soon' || productData?.status === 'out_of_stock';
+    const isDisabled = productData?.status === 'coming_soon' || productData?.status === 'out_of_stock' || isOutOfStock;
 
     const handleAddToCartClick = () => {
         if (isDisabled) {
@@ -57,14 +62,25 @@ const Product = () => {
         router.push('/cart');
     };
 
-    const fetchProductData = async () => {
-        const product = products.find(product => product._id === id);
-        setProductData(product);
-    }
+    const loadProductData = async () => {
+        try {
+            const { data } = await axios.get("/api/product/list");
+            if (data.success) {
+                const product = data.products.find((item) => item._id === id);
+                setProductData(product || null);
+                return;
+            }
+        } catch (error) {
+            console.error("Failed to load product details", error);
+        }
+
+        const fallbackProduct = products.find((item) => item._id === id);
+        setProductData(fallbackProduct || null);
+    };
 
     useEffect(() => {
-        fetchProductData();
-    }, [id, products.length])
+        loadProductData();
+    }, [id, products.length]);
 
     return productData ? (<>
         <Navbar />
@@ -149,6 +165,12 @@ const Product = () => {
                                     <td className="text-[var(--foreground)]/70 font-medium">Category</td>
                                     <td className="text-[var(--foreground)]/60">
                                         {productData.category}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="text-[var(--foreground)]/70 font-medium">Quantity</td>
+                                    <td className="text-[var(--foreground)]/60">
+                                        {isOutOfStock ? 'Out of stock' : `${productData.quantity} available`}
                                     </td>
                                 </tr>
                             </tbody>

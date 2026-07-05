@@ -27,10 +27,10 @@ const Navbar = () => {
         <Link href="/all-products" className="hover:text-[var(--foreground)]/80 transition">
           المتجر
         </Link>
-        <Link href="/" className="hover:text-[var(--foreground)]/80 transition">
+        <Link href="/contact" className="hover:text-[var(--foreground)]/80 transition">
           اٍتصل بنا
         </Link>
-        <Link href="/" className="hover:text-[var(--foreground)]/80 transition">
+        <Link href="/about" className="hover:text-[var(--foreground)]/80 transition">
           نبذة عنا
         </Link>
 

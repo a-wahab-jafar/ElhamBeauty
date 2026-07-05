@@ -8,7 +8,7 @@ import { toast } from "react-hot-toast";
 
 const AddProduct = () => {
 
-  const { getToken } = useAppContext()
+  const { getToken, fetchProductData } = useAppContext()
 
   const [files, setFiles] = useState([]);
   const [name, setName] = useState('');
@@ -16,6 +16,7 @@ const AddProduct = () => {
   const [category, setCategory] = useState('Cream');
   const [price, setPrice] = useState('');
   const [offerPrice, setOfferPrice] = useState('');
+  const [quantity, setQuantity] = useState('');
   const [status, setStatus] = useState('available');
 
   const handleSubmit = async (e) => {
@@ -28,6 +29,7 @@ const AddProduct = () => {
     formData.append("category", category);
     formData.append("price", price);
     formData.append("offerPrice", offerPrice);
+    formData.append("quantity", quantity);
     formData.append("status", status);
 
     for (let i = 0; i < files.length; i++) {
@@ -45,13 +47,15 @@ const AddProduct = () => {
       })
       if (data.success) {
         toast.success(data.message)
+        await fetchProductData()
         setFiles([])
         setName('')
         setDescription('')
         setCategory('Cream')
         setPrice('')
         setOfferPrice('')
-          setStatus('available')
+        setQuantity('')
+        setStatus('available')
       } else {
         toast.error(data.message)
       }
@@ -163,6 +167,21 @@ const AddProduct = () => {
               className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40"
               onChange={(e) => setOfferPrice(e.target.value)}
               value={offerPrice}
+              required
+            />
+          </div>
+          <div className="flex flex-col gap-1 w-32">
+            <label className="text-base font-medium" htmlFor="quantity">
+              Quantity
+            </label>
+            <input
+              id="quantity"
+              type="number"
+              min="0"
+              placeholder="0"
+              className="outline-none md:py-2.5 py-2 px-3 rounded border border-gray-500/40"
+              onChange={(e) => setQuantity(e.target.value)}
+              value={quantity}
               required
             />
           </div>
