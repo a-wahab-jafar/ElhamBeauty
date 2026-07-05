@@ -7,6 +7,7 @@ import Footer from "@/components/seller/Footer";
 import { ProductTableSkeleton } from "@/components/Fallback";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { CATEGORY_OPTIONS } from "@/lib/categoryUtils";
 
 const ProductList = () => {
   const { router, getToken, user, fetchProductData } = useAppContext();
@@ -93,7 +94,7 @@ const ProductList = () => {
       price: product.price?.toString() || "",
       offerPrice: product.offerPrice?.toString() || "",
       quantity: product.quantity?.toString() || "0",
-      category: product.category || "Cream",
+      category: product.category || CATEGORY_OPTIONS[0] || "Cream",
       status: product.status || "available",
     });
     setEditFiles(Array(4).fill(null));
@@ -103,7 +104,7 @@ const ProductList = () => {
   const closeEditModal = () => {
     setEditOpen(false);
     setEditProduct(null);
-    setEditForm({ name: "", description: "", price: "", offerPrice: "", quantity: "", category: "Cream", status: "available" });
+    setEditForm({ name: "", description: "", price: "", offerPrice: "", quantity: "", category: CATEGORY_OPTIONS[0] || "Cream", status: "available" });
     setEditFiles(Array(4).fill(null));
   };
 
@@ -449,9 +450,11 @@ const ProductList = () => {
                     value={editForm.category}
                     onChange={handleEditFieldChange}
                   >
-                    <option value="Cream">Cream</option>
-                    <option value="Lotion">Lotion</option>
-                    <option value="Make-up">Make-up</option>
+                    {CATEGORY_OPTIONS.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div className="flex flex-col gap-1 w-32">

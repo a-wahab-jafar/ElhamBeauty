@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useAppContext } from "@/context/AppContext";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { CATEGORY_OPTIONS } from "@/lib/categoryUtils";
 
 const AddProduct = () => {
 
@@ -13,7 +14,7 @@ const AddProduct = () => {
   const [files, setFiles] = useState([]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('Cream');
+  const [category, setCategory] = useState(CATEGORY_OPTIONS[0] || 'Cream');
   const [price, setPrice] = useState('');
   const [offerPrice, setOfferPrice] = useState('');
   const [quantity, setQuantity] = useState('');
@@ -51,7 +52,7 @@ const AddProduct = () => {
         setFiles([])
         setName('')
         setDescription('')
-        setCategory('Cream')
+        setCategory(CATEGORY_OPTIONS[0] || 'Cream')
         setPrice('')
         setOfferPrice('')
         setQuantity('')
@@ -137,9 +138,11 @@ const AddProduct = () => {
               onChange={(e) => setCategory(e.target.value)}
               defaultValue={category}
             >
-              <option value="Cream">Cream</option>
-              <option value="Lotion">Lotion</option>
-              <option value="Make-up">Make-up</option>
+              {CATEGORY_OPTIONS.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
             </select>
           </div>
           <div className="flex flex-col gap-1 w-32">
