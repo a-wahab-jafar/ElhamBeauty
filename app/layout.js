@@ -9,7 +9,7 @@ const outfit = Outfit({ subsets: ['latin'], weight: ["300", "400", "500"], varia
 const tajawal = Tajawal({ subsets: ['arabic'], weight: ["300", "400", "500", "700"], variable: "--font-arabic" });
 
 export const metadata = {
-  title: "Elham - Beauty",
+  title: "Asmaa - Beauty",
   description: "E-Commerce with Next.js ",
 };
 

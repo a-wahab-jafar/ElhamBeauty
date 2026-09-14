@@ -23,17 +23,17 @@ const Contact = () => {
                     مرحبًا بك في خدمة العملاء التي تهتم بكل تفاصيلك.
                   </h1>
                   <p className="max-w-2xl text-base text-[var(--foreground)]/80 md:text-lg">
-                    فريق Elham Beauty هنا للإجابة عن أسئلتك ومساعدتك في اختيار المنتجات المثالية. سواء كان لديك استفسار عن الطلب أو المكونات أو العروض، نحن إلى جانبك.
+                    فريق Asmaa Beauty هنا للإجابة عن أسئلتك ومساعدتك في اختيار المنتجات المثالية. سواء كان لديك استفسار عن الطلب أو المكونات أو العروض، نحن إلى جانبك.
                   </p>
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-100 dark:border-slate-800 dark:bg-slate-900 dark:shadow-slate-900/60">
                     <p className="text-sm uppercase tracking-[0.2em] text-orange-600 dark:text-orange-500">الهاتف</p>
-                    <p className="mt-3 text-lg font-semibold text-[var(--foreground)]">+249-90-508-1728</p>
+                    <p className="mt-3 text-lg font-semibold text-[var(--foreground)]">+20-10-40450320</p>
                   </div>
                   <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-100 dark:border-slate-800 dark:bg-slate-900 dark:shadow-slate-900/60">
                     <p className="text-sm uppercase tracking-[0.2em] text-sky-600 dark:text-sky-400">البريد الإلكتروني</p>
-                    <p className="mt-3 text-lg font-semibold text-[var(--foreground)]">elham.beauty617@<br />gmail.com</p>
+                    <p className="mt-3 text-lg font-semibold text-[var(--foreground)]">Asmaa.beauty@<br />gmail.com</p>
                   </div>
                 </div>
                 <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-100 dark:border-slate-800 dark:bg-slate-900 dark:shadow-slate-900/60">

@@ -94,7 +94,7 @@ const OrderSummary = () => {
         message += `Please confirm this order.`;
 
         const encodedMessage = encodeURIComponent(message);
-        window.open(`https://wa.me/249905081728?text=${encodedMessage}`, "_blank");
+        window.open(`https://wa.me/201040450320?text=${encodedMessage}`, "_blank");
         
         // Clear cart and show success
         toast.success("Order created! Opening WhatsApp...");

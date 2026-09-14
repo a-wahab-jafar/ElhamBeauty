@@ -23,7 +23,7 @@ const About = () => {
                   جمال طبيعي. تجربة فاخرة. قصة تبدأ معك.
                 </h1>
                 <p className="max-w-2xl text-base text-[var(--foreground)]/80 md:text-lg">
-                  في Elham Beauty، نؤمن بأن الجمال الحقيقي ينبع من البساطة والثقة. نجمع بين منتجات العناية الفاخرة والتسوق السلس لتمنحك إشراقة متجددة في كل يوم.
+                  في Asmaa Beauty، نؤمن بأن الجمال الحقيقي ينبع من البساطة والثقة. نجمع بين منتجات العناية الفاخرة والتسوق السلس لتمنحك إشراقة متجددة في كل يوم.
                 </p>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:shadow-slate-900/50">
